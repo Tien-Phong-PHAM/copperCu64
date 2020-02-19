@@ -1,0 +1,57 @@
+
+
+#
+# For Cu64
+#
+
+/gate/source/addSource Cu64Source gps
+/gate/source/Cu64Source/gps/particle ion
+/gate/source/Cu64Source/gps/ion 29 64 0 0
+/gate/source/Cu64Source/setForceUnstableFlag true
+/gate/source/Cu64Source/useDefaultHalfLife
+
+/gate/source/Cu64Source/setActivity 1. MBq
+
+
+/gate/source/Cu64Source/gps/energytype Mono
+/gate/source/Cu64Source/gps/monoenergy 0. eV
+
+/gate/source/Cu64Source/gps/centre 5. 0. 0. mm
+
+/gate/source/Cu64Source/gps/type Volume
+
+/gate/source/Cu64Source/gps/shape Sphere
+/gate/source/Cu64Source/gps/radius 5. mm
+
+/gate/source/Cu64Source/visualize 5000 grey 2 
+
+/gate/source/Cu64Source/gps/angtype iso
+
+#/gate/source/Cu64Source/setColor green
+#
+
+
+
+/*
+
+# For Cu64
+#
+
+/gate/source/addSource sourceCu64
+/gate/source/sourceCu64/setActivity 10000. Bq
+/gate/source/sourceCu64/gps/particle e+
+/gate/source/sourceCu64/setForcedUnstableFlag true
+/gate/source/sourceCu64/gps/energytype copper64
+/gate/source/sourceCu64/setForcedHalfLife 45721 s
+
+/gate/source/sourceCu64/gps/type Volume
+/gate/source/sourceCu64/gps/shape Sphere
+/gate/source/sourceCu64/gps/radius 0.1 mm
+/gate/source/sourceCu64/gps/centre 10. 10. 10. cm
+/gate/source/sourceCu64/vis/setColor blue
+/gate/source/sourceCu64/gps/confine NULL 
+/gate/source/sourceCu64/gps/angtype iso
+*/
+#################
+
+/gate/source/list
