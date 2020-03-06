@@ -1,0 +1,27 @@
+
+#===============================================================================
+# For Cu64
+#===============================================================================
+
+/gate/source/addSource                          Lu177Source gps
+/gate/source/Lu177Source/gps/particle            ion
+/gate/source/Lu177Source/gps/ion                 71 177 0 0
+/gate/source/Lu177Source/setForcedUnstableFlag   true
+/gate/source/Lu177Source/useDefaultHalfLife
+#/gate/source/Lu177Source/setForcedHalfLife       45720 s
+/gate/source/Lu177Source/setActivity             1. MBq
+/gate/source/Lu177Source/gps/energytype          Mono
+/gate/source/Lu177Source/gps/monoenergy          0. eV
+
+/gate/source/Lu177Source/visualize 1000 yellow 3 
+
+/gate/source/Lu177Source/gps/angtype             iso
+/gate/source/Lu177Source/gps/centre              0. 0. 0. cm
+/gate/source/Lu177Source/gps/type                Point
+#/gate/source/Lu177Source/gps/shape               Sphere
+#/gate/source/Lu177Source/gps/radius              1. mm
+/gate/source/Lu177Source/attachTo                phantom
+
+/gate/source/list
+
+

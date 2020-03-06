@@ -1,0 +1,44 @@
+#=====================================================
+# GEOMETRY
+#=====================================================
+
+/gate/geometry/setMaterialDatabase data/GateMaterials.db
+
+# World
+/gate/world/geometry/setXLength 1. m
+/gate/world/geometry/setYLength 1. m
+/gate/world/geometry/setZLength 1. m
+/gate/world/setMaterial Water
+/gate/world/vis/setVisible 1
+/gate/world/vis/setColor green
+
+# Water Box
+/gate/world/daughters/name              phantom
+
+#/gate/world/daughters/insert        sphere
+#/gate/phantom/geometry/setRmin      0. cm
+#/gate/phantom/geometry/setRmax      20. cm
+
+
+/gate/world/daughters/insert            box
+/gate/phantom/geometry/setXLength      40. cm
+/gate/phantom/geometry/setYLength      40. cm
+/gate/phantom/geometry/setZLength      40. cm
+
+/gate/phantom/placement/setTranslation 0. 0. 0. cm
+/gate/phantom/setMaterial Water
+/gate/phantom/vis/forceWireframe
+/gate/phantom/vis/setColor blue
+
+###########
+# a cold phantom for source
+###########
+
+#/gate/world/daughters/name           source_phantom
+#/gate/world/daughters/insert         sphere
+#/gate/source_phantom/geometry/setRmax 5 mm
+#/gate/source_phantom/geometry/setRmin 0 mm
+
+#/gate/source_phantom/setMaterial Water
+#/gate/source_phantom/vis/setColor yellow
+#/gate/source_phantom/vis/forceWireframe

@@ -1,0 +1,27 @@
+
+#===============================================================================
+# For 67Cu
+#===============================================================================
+
+/gate/source/addSource                          Cu67Source gps
+/gate/source/Cu67Source/gps/particle            ion
+/gate/source/Cu67Source/gps/ion                 29 67 0 0
+/gate/source/Cu67Source/setForcedUnstableFlag   true
+#/gate/source/Cu67Source/useDefaultHalfLife
+/gate/source/Cu67Source/setForcedHalfLife       222588 s
+/gate/source/Cu67Source/setActivity             1. MBq
+/gate/source/Cu67Source/gps/energytype          Mono
+/gate/source/Cu67Source/gps/monoenergy          0. eV
+
+/gate/source/Cu67Source/visualize 1000 yellow 3 
+
+/gate/source/Cu67Source/gps/angtype             iso
+/gate/source/Cu67Source/gps/centre              0. 0. 0. cm
+/gate/source/Cu67Source/gps/type                Volume
+/gate/source/Cu67Source/gps/shape               Sphere
+/gate/source/Cu67Source/gps/radius              1. mm
+/gate/source/Cu67Source/attachTo                phantom
+
+/gate/source/list
+
+

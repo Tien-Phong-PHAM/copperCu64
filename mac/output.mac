@@ -1,0 +1,171 @@
+
+
+#=====================================================
+# ACTOR
+#=====================================================
+
+/gate/actor/addActor PhaseSpaceActor                       Copper
+/gate/actor/Copper/attachTo                                phantom
+/gate/actor/Copper/save                                    output/Phasespaceactor.root
+
+/gate/actor/Copper/enableParticleName                      true 
+/gate/actor/Copper/enableEkine                             true
+/gate/actor/Copper/useVolumeFrame                          true
+
+#/gate/actor/Copper/storeOutgoingParticles                 true
+
+/gate/actor/Copper/addFilter                               particleFilter
+/gate/actor/Copper/particleFilter/addParticle              e-
+/gate/actor/Copper/storeSecondaries                        true
+/gate/actor/Copper/enableProductionProcess                 true
+
+
+
+#====================================================================================================
+# Energy spectrum
+#====================================================================================================
+
+
+
+#===========Gama spectra=============================================================================
+
+/gate/actor/addActor EnergySpectrumActor                      Gamma_Spectrum
+/gate/actor/Gamma_Spectrum/save                               ./output/Gamma_spectra.root
+/gate/actor/Gamma_Spectrum/attachTo    	                      phantom
+/gate/actor/Gamma_Spectrum/addFilter                          particleFilter
+/gate/actor/Gamma_Spectrum/particleFilter/addParticle         gamma
+
+#/gate/actor/Gamma_Spectrum/addFilter                energyFilter
+#/gate/actor/Gamma_Spectrum/energyFilter/setEmin     10 keV
+
+/gate/actor/Gamma_Spectrum/energySpectrum/setEmin             0 keV
+/gate/actor/Gamma_Spectrum/energySpectrum/setEmax             2 MeV
+/gate/actor/Gamma_Spectrum/energySpectrum/setNumberOfBins     200
+/gate/actor/Gamma_Spectrum/enableNbPartSpectrum true
+
+
+/gate/actor/Gamma_Spectrum/saveAsText false
+
+#===========Gamma spectra============================================================================
+
+
+#===========Positron spectra=========================================================================
+
+/gate/actor/addActor EnergySpectrumActor                      Pos_Spectrum
+/gate/actor/Pos_Spectrum/save                                 ./output/Pos_spectra.root
+/gate/actor/Pos_Spectrum/attachTo    	                      phantom
+
+/gate/actor/Pos_Spectrum/addFilter IDFilter
+#/gate/actor/Pos_Spectrum/IDFilter/selectID 1
+/gate/actor/Pos_Spectrum/IDFilter/selectParentID 1
+
+/gate/actor/Pos_Spectrum/addFilter                            particleFilter
+/gate/actor/Pos_Spectrum/particleFilter/addParticle           e+
+
+/gate/actor/Pos_Spectrum/energySpectrum/setEmin               0 keV
+/gate/actor/Pos_Spectrum/energySpectrum/setEmax               0.7 MeV
+/gate/actor/Pos_Spectrum/energySpectrum/setNumberOfBins       100
+/gate/actor/Pos_Spectrum/enableNbPartSpectrum true
+
+/gate/actor/Pos_Spectrum/saveAsText false
+#===========Positron spectra==========================================================================
+
+
+
+
+
+#===========Beta Spectra==============================================================================
+
+
+/gate/actor/addActor EnergySpectrumActor                      Beta_Spectrum
+/gate/actor/Beta_Spectrum/save                                ./output/Beta_spectra.root
+/gate/actor/Beta_Spectrum/attachTo    	                      phantom
+
+#using particleFilter to select beta 
+
+/gate/actor/Beta_Spectrum/addFilter IDFilter
+#/gate/actor/Spectrum/IDFilter/selectID 1
+/gate/actor/Beta_Spectrum/IDFilter/selectParentID 1
+
+
+/gate/actor/Beta_Spectrum/addFilter                           particleFilter
+/gate/actor/Beta_Spectrum/particleFilter/addParticle          e-
+
+/gate/actor/Beta_Spectrum/energySpectrum/setEmin              0 keV
+/gate/actor/Beta_Spectrum/energySpectrum/setEmax              0.7 MeV
+/gate/actor/Beta_Spectrum/energySpectrum/setNumberOfBins      100
+/gate/actor/Beta_Spectrum/enableNbPartSpectrum true
+
+#/gate/actor/Beta_Spectrum/enableFluenceCosSpectrum true
+/gate/actor/Beta_Spectrum/enableEdepSpectrum true 
+#/gate/actor/Beta_Spectrum/saveEveryNSeconds    		 60
+#/gate/actor/Beta_Spectrum/normalizeToNbPrimaryEvents true
+#/gate/actor/Beta_Spectrum/setEnergyPerUnitMass true
+
+/gate/actor/Beta_Spectrum/saveAsText false
+
+
+/gate/actor/Beta_Spectrum/enableLETSpectrum true
+#/gate/actor/Beta_Spectrum/setLETmin 
+#===========Beta spectra=================================================================================
+
+#===========Energy spectrum==============================================================================
+
+/gate/actor/addActor EnergySpectrumActor                  Spectrum
+/gate/actor/Spectrum/save                                 ./output/Spectrum.root
+/gate/actor/Spectrum/attachTo    	                      phantom
+
+/gate/actor/Spectrum/addFilter IDFilter
+#/gate/actor/Spectrum/IDFilter/selectID 1
+/gate/actor/Spectrum/IDFilter/selectParentID 1
+
+/gate/actor/Spectrum/addFilter                            particleFilter                          
+/gate/actor/Spectrum/particleFilter/addParticle           e+
+
+/gate/actor/Spectrum/energySpectrum/setEmin               0 keV
+/gate/actor/Spectrum/energySpectrum/setEmax               2. MeV
+/gate/actor/Spectrum/energySpectrum/setNumberOfBins       200
+/gate/actor/Spectrum/enableNbPartSpectrum true
+
+/gate/actor/Spectrum/saveAsText false
+
+
+#========================================================================
+#Production and stopping particle position
+#========================================================================
+
+/gate/actor/addActor ProductionAndStoppingActor parcours
+/gate/actor/parcours/save                       ./output/Parcours.root
+/gate/actor/parcours/attachTo                    phantom
+/gate/actor/parcours/setResolution           100 100 100
+/gate/actor/parcours/stepHitType post 
+
+#=======================================================================
+#Dose Actor
+#======================================================================
+
+/gate/actor/addActor                      DoseActor  dose_3d
+/gate/actor/dose_3d/save                  output/dose.root
+/gate/actor/dose_3d/attachTo    	      phantom
+/gate/actor/dose_3d/stepHitType           random
+/gate/actor/dose_3d/setPosition           0 0 0 mm
+/gate/actor/dose_3d/setVoxelSize          4 4 4 mm
+/gate/actor/dose_3d/enableEdep            true
+/gate/actor/dose_3d/enableUncertaintyEdep true
+/gate/actor/dose_3d/enableDose            false
+/gate/actor/dose_3d/enableSquaredDose     false
+/gate/actor/dose_3d/enableUncertaintyDose false
+/gate/actor/dose_3d/enableNumberOfHits    false
+
+#========================================================================
+#Track length of electron
+#========================================================================
+
+/gate/actor/addActor TrackLengthActor     length
+/gate/actor/length/save                   output/length.root
+#/gate/actor/length/attachTo    	                      phantom
+#/gate/actor/length/addFilter                          particleFilter
+#/gate/actor/length/particleFilter/addParticle         e
+/gate/actor/length/setLmin                0 mm
+/gate/actor/length/setLmax                1 cm
+/gate/actor/length/setNumberOfBins        200

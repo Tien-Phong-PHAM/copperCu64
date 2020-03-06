@@ -1,0 +1,68 @@
+
+#===============================================================================
+# For Cu64
+#===============================================================================
+
+
+
+
+#Definition of beta source mode histogram 
+
+/gate/source/addSource                          Cu64Source gps
+/gate/source/Cu64Source/gps/particle            e-
+/gate/source/Cu64Source/gps/energytype          UserSpectrum
+/gate/source/Cu64Source/gps/setSpectrumFile     ./data/Spectrum_beta1.txt
+#/gate/source/Cu64Source/setForcedHalfLife       45720 s # for two different sources       
+#/gate/source/Cu64Source/setActivity             1. MBq
+/gate/source/Cu64Source/gps/angtype             iso
+/gate/source/Cu64Source/gps/centre              0. 0. 0. cm
+/gate/source/Cu64Source/gps/type                Volume
+/gate/source/Cu64Source/gps/shape               Sphere
+/gate/source/Cu64Source/gps/radius              3. mm
+
+/gate/source/Cu64Source/setIntensity             81
+
+
+# Definition of gamma source mode disrete spectrum
+
+/gate/source/addSource                           Cu64gamma gps 
+/gate/source/Cu64gamma/gps/particle              gamma
+/gate/source/Cu64gamma/gps/energytype            UserSpectrum 
+/gate/source/Cu64gamma/gps/setSpectrumFile       ./data/Spectrum_gamma.txt
+
+/gate/source/Cu64gamma/setIntensity              1
+
+/gate/source/Cu64gamma/gps/type                  Volume
+/gate/source/Cu64gamma/gps/shape                 Sphere
+/gate/source/Cu64gamma/gps/radius                1.0 mm
+/gate/source/Cu64gamma/gps/centre                0. 0. 0. cm
+/gate/source/Cu64gamma/gps/angtype iso
+
+
+# Definition of Positron source interpolation spectrum or histogram spectrum 
+
+
+/gate/source/addSource                           Cu64positron gps 
+/gate/source/Cu64positron/gps/particle           e+
+/gate/source/Cu64positron/gps/energytype         UserSpectrum 
+/gate/source/Cu64positron/gps/setSpectrumFile    ./data/Spectrum_positron.txt
+
+/gate/source/Cu64positron/setIntensity            37
+
+/gate/source/Cu64positron/gps/type Volume
+/gate/source/Cu64positron/gps/shape Sphere
+/gate/source/Cu64positron/gps/radius 1. mm
+/gate/source/Cu64positron/gps/centre 0. 0. 0. cm
+
+/gate/source/Cu64positron/gps/angtype iso
+
+
+#/gate/source/Cu64positron/gps/Forbid source_phantom 
+#/gate/source/Cu64gamma/gps/Forbid source_phantom
+#/gate/source/Cu64Source/gps/Forbid source_phantom
+ 
+###############################
+#/gate/source/Cu64positron/visualize 1000 yellow 2
+/gate/source/Cu64Source/visualize 1000 yellow 3
+/gate/source/list
+

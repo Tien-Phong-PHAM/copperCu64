@@ -1,0 +1,56 @@
+==================================================================================================
+                                  # Caractéristique du Cu64 #
+==================================================================================================
+
+## Description
+
+Ce travail est effectué pour le but de caractériser les deux isotopes du théranostique Cu64/Cu67 en mode du spectre en énergie. J'ai utilisé les définitions différentes de la source pour simuler la source et évaluer le temps de calcul.
+
+## Géométrie
+
+Un volume mère initial appellé "WORLD" est défini par défaut comme un cube de 1 m de côté. A l'intérieur de ce volume, une structure filles "Phantom" de 50 cm de côté rempli d'eau qu'on suit toutes les processus physiques des particles est ajouté.
+
+## Source
+
+2 types de source sont simulés: 
+
+- Source ion gps 
+- Source définie par donnée expérimentale 
+
+La source est définie avec les fichiers texte pour les particules différentes qui sont mises dans le répertoire data:
+
++ "Spectrum_gamma": se compose d'un seul pic de 1,345 MeV
+
++ "Spectrum_beta": présente la distribution énergétique d'électron émis par 64Cu (donnée extraite de l'image du spectre de beta en utilisant le logiciel 'WebPlotDigitizer') 
+
++ "Spectrum_positron": présente la distribution énergétique de positron émis par 64Cu ( donnée extraite de l'image du spectre de positron en utilisant le logiciel 'WebPlotDigitizer')
+
+La géométrie dans la quelle les particules pourraient être émises est une sphère d'un mm de rayons.
+
+
+## Physics
+
+Pour éviter les interactions de particles avec matière, le seul processus " RadioactiveDecay " a été activé au volume du fantôm.
+
+
+## Output
+
+
+Le spectre en énergie du beta, du gamma, et du positron sont enregistré utilisant "EnergySpectrumActor" sous le fichier ROOT et fichier text
+
+Utiliser fichier ReadFile.c pour analyser et comparer des spectres avec ROOT. De plus, un fichier script permet aussi d'analyser les spectre en énergie. 
+
+
+La liste des macros qu'on utilisée dans cette étude:
+
+- main.mac
+- physic.mac
+- output.mac
+- geometry.mac
+- verbose.mac
+- visu.mac
+- 64Cu_source.mac
+- simple_source.mac
+
+=======================================
+

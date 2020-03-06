@@ -1,0 +1,96 @@
+#================================================================================#
+#    Simulations du dépôt de dose                                                #
+#                                                                                #
+#  Déterminer les dose-point-kernel (DPK)                                        #
+#                                                                                #
+#    Cu64   et Cu67                                                              #
+#                                                                                #
+#                                                                                #
+# jusqu'à quelle distance, quelle taille de matrice et dimensions des voxels ?   #
+#                                                                                #
+#                                                                                #
+#faire des HDV avec différentes proportions des 2 radionucléides.                #
+#================================================================================#
+
+
+#===========Energy spectrum==============================================================================
+
+/gate/actor/addActor EnergySpectrumActor                  Spectrum
+/gate/actor/Spectrum/save                                 ./output/Spectrum.root
+/gate/actor/Spectrum/attachTo    	                      phantom
+
+/gate/actor/Spectrum/addFilter IDFilter
+/gate/actor/Spectrum/IDFilter/selectID 1
+#/gate/actor/Spectrum/IDFilter/selectParentID 1
+
+#/gate/actor/Spectrum/addFilter                            particleFilter                          
+#/gate/actor/Spectrum/particleFilter/addParticle           e-
+
+/gate/actor/Spectrum/energySpectrum/setEmin               0 keV
+/gate/actor/Spectrum/energySpectrum/setEmax               1. MeV
+/gate/actor/Spectrum/energySpectrum/setNumberOfBins       200
+/gate/actor/Spectrum/enableFluenceTrackSpectrum false
+/gate/actor/Spectrum/enableNbPartSpectrum true
+/gate/actor/Spectrum/enableEdepSpectrum true 
+/gate/actor/Spectrum/saveAsText false
+
+
+/gate/actor/Spectrum/enableEdepHisto true
+/gate/actor/Spectrum/enableEdepTimeHisto true
+/gate/actor/Spectrum/enableElossHisto true
+/gate/actor/Spectrum/energyLossHisto/setEmin 0 eV
+/gate/actor/Spectrum/energyLossHisto/setEmax 1. MeV
+/gate/actor/Spectrum/energyLossHisto/setNumberOfBins 120
+
+
+#Production and stopping particle position
+
+/gate/actor/addActor   ProductionAndStoppingActor stopping
+/gate/actor/stopping/save     mystopping.root
+/gate/actor/stopping/attachTo phantom
+#/gate/actor/stopping/setVoxelSize          400 400 0.2 mm
+/gate/actor/stopping/setResolution 10 10 100
+/gate/actor/stopping/stepHitType random
+
+
+# definir LET par micro mettre: ( keV/um)
+
+/gate/actor/Spectrum/enableLETSpectrum true
+/gate/actor/Spectrum/LETSpectrum/setLETmin 0 keV/um
+/gate/actor/Spectrum/LETSpectrum/setLETmax 10 keV/um
+/gate/actor/Spectrum/LETSpectrum/setNumberOfBins 200
+
+
+
+
+# LET Actor
+
+
+/gate/actor/addActor                         LETActor  letDoseToWater
+/gate/actor/letDoseToWater/save                         output/letToWaterprimary.root
+/gate/actor/letDoseToWater/attachTo                     phantom
+/gate/actor/letDoseToWater/setVoxelSize                 400 400 0.2 mm
+/gate/actor/letDoseToWater/setType						 DoseAveraged
+/gate/actor/letDoseToWater/setLETtoWater                true
+/gate/actor/letDoseToWater/doParallelCalculation		false
+/gate/actor/letDoseToWater/addFilter                    IDFilter
+/gate/actor/letDoseToWater/IDFilter/selectID			1
+/gate/actor/letDoseToWater/saveEveryNSeconds     		60
+
+
+
+### Track averaged LET
+##### primary and secondary protons  
+/gate/actor/addActor                         LETActor  letTrack
+/gate/actor/letTrack/save                         output/letDoseToWater.root
+/gate/actor/letTrack/attachTo                     phantom
+/gate/actor/letTrack/setVoxelSize                 400 400 0.2 mm
+/gate/actor/letTrack/setType					  TrackAveraged
+##/gate/actor/letTrack/setRestricted			  false
+##/gate/actor/letTrack/setDeltaRestricted  		  50000 mm
+/gate/actor/letTrack/setLETtoWater                true
+/gate/actor/letTrack/doParallelCalculation		  false
+/gate/actor/letTrack/saveEveryNSeconds     		  60
+/gate/actor/letTrack/addFilter                    particleFilter
+/gate/actor/letTrack/particleFilter/addParticle   e-
+

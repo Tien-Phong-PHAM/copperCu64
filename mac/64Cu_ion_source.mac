@@ -1,0 +1,21 @@
+
+#===============================================================================
+# For Cu64
+#===============================================================================
+
+/gate/source/addSource                          Cu64Source gps
+/gate/source/Cu64Source/gps/particle            ion
+/gate/source/Cu64Source/gps/ion                 29 64 0 0
+/gate/source/Cu64Source/useDefaultHalfLife
+/gate/source/Cu64Source/setActivity             1. MBq
+/gate/source/Cu64Source/gps/energytype          Mono
+/gate/source/Cu64Source/gps/monoenergy          0. MeV
+/gate/source/Cu64Source/gps/angtype             iso
+/gate/source/Cu64Source/gps/centre              0. 0. 0. cm
+/gate/source/Cu64Source/gps/type                Volume
+/gate/source/Cu64Source/gps/shape               Sphere
+/gate/source/Cu64Source/gps/radius              1. mm
+
+/gate/source/list
+
+
