@@ -1,15 +1,13 @@
 #================================================================================#
-#    Simulations du dépôt de dose                                                #
+#                   Simulations du dépôt de dose                                 #
 #                                                                                #
-#  Déterminer les dose-point-kernel (DPK)                                        #
+#                Déterminer les dose-point-kernel (DPK)                          #
 #                                                                                #
-#    Cu64   et Cu67                                                              #
-#                                                                                #
+#                        Cu64  &  Cu67                                           #
 #                                                                                #
 # jusqu'à quelle distance, quelle taille de matrice et dimensions des voxels ?   #
 #                                                                                #
-#                                                                                #
-#faire des HDV avec différentes proportions des 2 radionucléides.                #
+#       Faire des HDV avec différentes proportions des 2 radionucléides.         #
 #================================================================================#
 
 
@@ -45,52 +43,124 @@
 
 #Production and stopping particle position
 
-/gate/actor/addActor   ProductionAndStoppingActor stopping
-/gate/actor/stopping/save     mystopping.root
-/gate/actor/stopping/attachTo phantom
-#/gate/actor/stopping/setVoxelSize          400 400 0.2 mm
-/gate/actor/stopping/setResolution 10 10 100
-/gate/actor/stopping/stepHitType random
+#/gate/actor/addActor   ProductionAndStoppingActor stopping # 2 images of prod and stop
+#/gate/actor/stopping/save     mystopping.root
+#/gate/actor/stopping/attachTo phantom
+##/gate/actor/stopping/setVoxelSize          400 0.2 0.2 mm # 2D distribution 
+##/gate/actor/stopping/setVoxelSize          400 400 0.2 mm  # 1D distribution
+#/gate/actor/stopping/setResolution 2 2 100    # 3D distribution 
+#/gate/actor/stopping/stepHitType random
 
 
 # definir LET par micro mettre: ( keV/um)
 
-/gate/actor/Spectrum/enableLETSpectrum true
-/gate/actor/Spectrum/LETSpectrum/setLETmin 0 keV/um
-/gate/actor/Spectrum/LETSpectrum/setLETmax 10 keV/um
-/gate/actor/Spectrum/LETSpectrum/setNumberOfBins 200
+#/gate/actor/Spectrum/enableLETSpectrum true
+#/gate/actor/Spectrum/LETSpectrum/setLETmin 0 keV/um
+#/gate/actor/Spectrum/LETSpectrum/setLETmax 10 keV/um
+#/gate/actor/Spectrum/LETSpectrum/setNumberOfBins 200
 
+#Secondary production ici il a seulement les gammas comme les particles secondaires
 
+##/gate/actor/addActor SecondaryProductionActor Secondary_production
+##/gate/actor/Secondary_production/save         output/secondary_production.root
+##/gate/actor/Secondary_production/attachTo     phantom
+
+##How to calcul Delta kinetic energy
+
+##/gate/actor/addActor StoppingPowerActor Stopping_power
+##/gate/actor/Stopping_power/save                 output/stopping.root
+##/gate/actor/Stopping_power/attachTo             phantom
+##/gate/actor/Stopping_power/setResolution        10 10 100
+##/gate/actor/Stopping_power/stepHitType          random
+
+# the following actor stores 3D Dose/Edep distributions
+
+#/gate/actor/addActor                               DoseActor  doseDistribution
+#/gate/actor/doseDistribution/attachTo    	       phantom
+#/gate/actor/doseDistribution/stepHitType           random
+#/gate/actor/doseDistribution/setPosition           0 0 0 mm
+#/gate/actor/doseDistribution/setVoxelSize          5 5 5 mm
+#/gate/actor/doseDistribution/saveEveryNSeconds     20
+#/gate/actor/doseDistribution/enableEdep            true
+#/gate/actor/doseDistribution/enableUncertaintyEdep true
+#/gate/actor/doseDistribution/enableDose            false
+#/gate/actor/doseDistribution/enableNumberOfHits    false
+#/gate/actor/doseDistribution/save                  output/output-full.root
+
+#/gate/actor/addActor PhaseSpaceActor                       Copper
+#/gate/actor/Copper/attachTo                                phantom
+#/gate/actor/Copper/save                                    output/Phasespaceactor.root
 
 
 # LET Actor
 
 
-/gate/actor/addActor                         LETActor  letDoseToWater
-/gate/actor/letDoseToWater/save                         output/letToWaterprimary.root
-/gate/actor/letDoseToWater/attachTo                     phantom
-/gate/actor/letDoseToWater/setVoxelSize                 400 400 0.2 mm
-/gate/actor/letDoseToWater/setType						 DoseAveraged
-/gate/actor/letDoseToWater/setLETtoWater                true
-/gate/actor/letDoseToWater/doParallelCalculation		false
-/gate/actor/letDoseToWater/addFilter                    IDFilter
-/gate/actor/letDoseToWater/IDFilter/selectID			1
-/gate/actor/letDoseToWater/saveEveryNSeconds     		60
+#/gate/actor/addActor                         LETActor  letDoseToWater
+#/gate/actor/letDoseToWater/save                         output/letToWaterprimary.root
+#/gate/actor/letDoseToWater/attachTo                     phantom
+#/gate/actor/letDoseToWater/setVoxelSize                 400 400 0.2 mm
+#/gate/actor/letDoseToWater/setType						 DoseAveraged
+#/gate/actor/letDoseToWater/setLETtoWater                true
+#/gate/actor/letDoseToWater/doParallelCalculation		false
+#/gate/actor/letDoseToWater/addFilter                    IDFilter
+#/gate/actor/letDoseToWater/IDFilter/selectID			1
+#/gate/actor/letDoseToWater/saveEveryNSeconds     		60
 
 
 
 ### Track averaged LET
 ##### primary and secondary protons  
-/gate/actor/addActor                         LETActor  letTrack
-/gate/actor/letTrack/save                         output/letDoseToWater.root
-/gate/actor/letTrack/attachTo                     phantom
-/gate/actor/letTrack/setVoxelSize                 400 400 0.2 mm
-/gate/actor/letTrack/setType					  TrackAveraged
-##/gate/actor/letTrack/setRestricted			  false
-##/gate/actor/letTrack/setDeltaRestricted  		  50000 mm
-/gate/actor/letTrack/setLETtoWater                true
-/gate/actor/letTrack/doParallelCalculation		  false
-/gate/actor/letTrack/saveEveryNSeconds     		  60
-/gate/actor/letTrack/addFilter                    particleFilter
-/gate/actor/letTrack/particleFilter/addParticle   e-
+#/gate/actor/addActor                         LETActor  letTrack
+#/gate/actor/letTrack/save                         output/letDoseToWater.root
+#/gate/actor/letTrack/attachTo                     phantom
+#/gate/actor/letTrack/setVoxelSize                 400 400 0.2 mm
+#/gate/actor/letTrack/setType					  TrackAveraged
+###/gate/actor/letTrack/setRestricted			  false
+###/gate/actor/letTrack/setDeltaRestricted  		  50000 mm
+#/gate/actor/letTrack/setLETtoWater                true
+#/gate/actor/letTrack/doParallelCalculation		  false
+#/gate/actor/letTrack/saveEveryNSeconds     		  60
+#/gate/actor/letTrack/addFilter                    particleFilter
+#/gate/actor/letTrack/particleFilter/addParticle   e-
+
+######
+
+/gate/actor/addActor PhaseSpaceActor                 PhaseSpaceOut
+/gate/actor/PhaseSpaceOut/save                       output/kk.root
+/gate/actor/PhaseSpaceOut/attachTo                   phantom
+/gate/actor/PhaseSpaceOut/enableEkine                true
+/gate/actor/PhaseSpaceOut/enableXPosition            true
+/gate/actor/PhaseSpaceOut/enableYPosition            true
+/gate/actor/PhaseSpaceOut/enableZPosition            false
+/gate/actor/PhaseSpaceOut/enableXDirection           true
+/gate/actor/PhaseSpaceOut/enableYDirection           true
+/gate/actor/PhaseSpaceOut/enableZDirection           true
+/gate/actor/PhaseSpaceOut/enableProductionVolume     false 
+/gate/actor/PhaseSpaceOut/enableProductionProcess    false
+/gate/actor/PhaseSpaceOut/enableParticleName         false
+/gate/actor/PhaseSpaceOut/enableWeight               false
+/gate/actor/PhaseSpaceOut/enableTime                 true
+/gate/actor/PhaseSpaceOut/storeSecondaries           true
+/gate/actor/PhaseSpaceOut/useVolumeFrame             false
+/gate/actor/PhaseSpaceOut/storeOutgoingParticles     false
+/gate/actor/PhaseSpaceOut/addFilter                  particleFilter
+/gate/actor/PhaseSpaceOut/particleFilter/addParticle e-
+/gate/actor/PhaseSpaceOut/enableNuclearFlag          true
+
+
+# Dose actor with DoseToWater
+# *WARNING* With DoseToWater this actor is much slower than without
+# because the dedx is computed several times.
+#=====================================================
+/gate/actor/addActor                            DoseActor   dose0
+/gate/actor/dose0/attachTo                      phantom
+/gate/actor/dose0/stepHitType                   random
+/gate/actor/dose0/setPosition                   0 0 0 cm
+/gate/actor/dose0/setResolution                 1 1 300
+/gate/actor/dose0/enableDose                    true
+/gate/actor/dose0/enableDoseToWater             true
+/gate/actor/dose0/save                          output/IDD.root
+/gate/actor/dose0/saveEveryNSeconds             120
+
+
 

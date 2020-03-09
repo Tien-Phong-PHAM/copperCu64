@@ -34,7 +34,7 @@
 
 /gate/source/Cu64gamma/gps/type                  Volume
 /gate/source/Cu64gamma/gps/shape                 Sphere
-/gate/source/Cu64gamma/gps/radius                1.0 mm
+/gate/source/Cu64gamma/gps/radius                3.0 mm
 /gate/source/Cu64gamma/gps/centre                0. 0. 0. cm
 /gate/source/Cu64gamma/gps/angtype iso
 
@@ -51,7 +51,7 @@
 
 /gate/source/Cu64positron/gps/type Volume
 /gate/source/Cu64positron/gps/shape Sphere
-/gate/source/Cu64positron/gps/radius 1. mm
+/gate/source/Cu64positron/gps/radius 3. mm
 /gate/source/Cu64positron/gps/centre 0. 0. 0. cm
 
 /gate/source/Cu64positron/gps/angtype iso

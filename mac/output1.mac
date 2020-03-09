@@ -1,0 +1,82 @@
+
+#=====================================================
+# ACTOR
+#=====================================================
+
+/gate/actor/addActor PhaseSpaceActor                       Copper
+/gate/actor/Copper/attachTo                                phantom
+/gate/actor/Copper/save           output/Phasespaceactor.root
+
+/gate/actor/Copper/enableParticleName                      true 
+/gate/actor/Copper/enableEkine                             true
+/gate/actor/Copper/useVolumeFrame                          true
+
+#/gate/actor/Copper/storeOutgoingParticles                 true
+
+#/gate/actor/Copper/addFilter                               particleFilter
+#/gate/actor/Copper/particleFilter/addParticle              e-
+/gate/actor/Copper/storeSecondaries                        true
+/gate/actor/Copper/enableProductionProcess                 true
+
+
+#=====================================================
+# DETECTORS 1
+#=====================================================
+
+/gate/actor/addActor                        DoseActor  depthdose
+/gate/actor/depthdose/save                  output/dose-depth.txt
+/gate/actor/depthdose/attachTo    	        phantom
+/gate/actor/depthdose/stepHitType           random
+/gate/actor/depthdose/setPosition           0 0 0 cm
+/gate/actor/depthdose/setResolution         1 1 100
+/gate/actor/depthdose/setSize               5 5 10 mm
+/gate/actor/depthdose/saveEveryNSeconds     60
+/gate/actor/depthdose/enableEdep            true
+/gate/actor/depthdose/enableUncertaintyEdep true
+/gate/actor/depthdose/enableDose            false
+/gate/actor/depthdose/enableUncertaintyDose false
+/gate/actor/depthdose/enableNumberOfHits    false
+
+
+/gate/actor/addActor                          DoseActor  doseprofile
+/gate/actor/doseprofile/save                  output/dose-profile.txt
+/gate/actor/doseprofile/attachTo    	      phantom
+/gate/actor/doseprofile/stepHitType           random
+/gate/actor/doseprofile/setPosition           0 0 0 cm
+/gate/actor/doseprofile/setResolution         100 1 1
+/gate/actor/doseprofile/setSize               5 40 40 cm
+/gate/actor/doseprofile/saveEveryNSeconds     60
+/gate/actor/doseprofile/enableEdep            true
+/gate/actor/doseprofile/enableUncertaintyEdep true
+/gate/actor/doseprofile/enableDose            false
+/gate/actor/doseprofile/enableUncertaintyDose false
+/gate/actor/doseprofile/enableNumberOfHits    false
+
+
+/gate/actor/addActor                   DoseActor  dose
+/gate/actor/dose/attachTo    	       phantom
+/gate/actor/dose/stepHitType           random
+/gate/actor/dose/setVoxelSize          2 2 2 mm
+/gate/actor/dose/enableDose            true
+/gate/actor/dose/enableUncertaintyDose true
+/gate/actor/dose/save                  output/output.mhd
+
+#=====================================================
+# DETECTORS 2
+#=====================================================
+
+/gate/actor/addActor                               DoseActor  doseDistribution
+/gate/actor/doseDistribution/save                  output/dose.mhd
+/gate/actor/doseDistribution/attachTo    	       phantom    
+/gate/actor/doseDistribution/stepHitType           random
+/gate/actor/doseDistribution/setPosition           0 0 0 cm
+/gate/actor/doseDistribution/setResolution         1 1 40
+/gate/actor/doseDistribution/saveEveryNSeconds     60
+/gate/actor/doseDistribution/enableEdep            true
+/gate/actor/doseDistribution/enableUncertaintyEdep false
+/gate/actor/doseDistribution/enableDose            true
+/gate/actor/doseDistribution/enableUncertaintyDose true
+/gate/actor/doseDistribution/enableNumberOfHits    false
+
+
+

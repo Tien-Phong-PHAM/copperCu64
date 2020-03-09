@@ -1,24 +1,42 @@
-les remarques sur la source ion
 
-Quand j'ai simulé la source Cu64 en definissant une source ion dans le GATE. j'ai constaté que la distribution énergétique du positron et du beta est très différents par rapport aux spectres référents dans la région de base énergie.
 
-Sur le spectre du beta moins, la probabilité d'emission des électrons auger est trop importante donc on voit rien sur les autres zones. En effet, deux solutions sont réalisées soit on avait désactivé les processus de conversion internale soit on avait coupé cette zone sur le spectre total. La conséquence de cette action est qu'on a perdu de grand nombre de particule émise par la source, donc, le résultat est moins correct.
 
-Concernant le spectre du positron, on a le même problème dans la zone de base énergie. Le spectre qu'on a obtenu par la source ion est très différent avec le spectre défini ( spectre référent). Pour l'instant, je n'ai pas encore compris cette différente.
+######Les remarques sur la source ion
+
+Quand j'ai simulé la source Cu64 en definissant une source ion en utilisant le logiciel GATE. j'ai constaté que la distribution énergétique du positron est très différent par rapport au spectre référent dans la région de base énergie.
+
+## ce problème a été réglé par la combinaison de deux filtres (filter ID + filter Particle)
+
+Sur le spectre du beta moins de la source ion Cu64, la probabilité d'emission des électrons auger est trop importante donc on voit rien sur les autres zones. En effet, deux solutions sont réalisées soit on aie désactivé les processus de conversion interne soit on aie coupé cette zone sur le spectre total. La conséquence de cette action est qu'on perdra de grand nombre de particule émise par la source, donc, le résultat est moins correct. j'ai besoin d'une autre solution plus correcte.
+
+Concernant le spectre du positron, on a le même problème dans la zone de base énergie. Le spectre qu'on a obtenu par la source ion est très différent avec le spectre défini. Pour l'instant, je n'ai pas encore compris cette différence.
 
 A ma connaissance, la différence entre le spectre d'électron et de positron pour le cas de la désintégration de source radioactive est du fait de la différence de la charge d'électron émis et de positron émis. donc, je pense qu'il me manque quelque chose dans la physics list liée à l'interaction coulombienne entre des particules emises et des noyaux.
 
 
-du fait de ce problem, je simule directement les particules émises avec sa probabilité correspondante
+
+
+--> A cause de ce problem, je simule directement les particules émises avec sa probabilité correspondante
 
 
 
 
 
-questionnaire à Nico
+Questionnaires à Nicolas
 
-1, zone de base énergie du beta moins qui vient du auger electron, comment désactiver ce processus car ça march pas avec ......
-2, le spectre du positron avec la source ion est très différent
-3, comment on peut sélectionner les particules émis par source radioactive avec son énergie initiale ( sans diffusé)  
+1, Zone de base énergie du beta moins qui vient de la conversiontion interne (auger electron émission), comment désactiver ce processus car ça march pas avec ce code dans Gate.
 
-( ça marche pas avec filter ID)
+/gate/physics/addProcess RadioactiveDecay
+
+/gate/physics/processes/PhotoElectric/setAugerElectron false
+/process/em/fluo false
+/process/em/pixe false
+/process/em/auger false
+/process/em/augerCascade false
+
+
+2, Le spectre du positron avec la source ion est très différent par rapport au spectre référent ?
+
+3, Comment on peut sélectionner les particules émis par source radioactive avec son énergie initiale ( sans diffusé)   ( déjà trouvé)
+
+4, Comment on peut simuler directement du rendement en profondeur dans Gate en utilisant Root comme dans le Geant4? 

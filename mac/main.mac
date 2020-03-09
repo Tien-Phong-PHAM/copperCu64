@@ -28,8 +28,8 @@
 #=====================================================
 
 #/control/execute mac/output.mac
-/control/execute mac/output_dose.mac
-
+#/control/execute mac/output_dose.mac
+/control/execute mac/output1.mac
 #=====================================================
 # INITIALISATION
 #=====================================================
@@ -52,5 +52,5 @@
 
 #/tracking/verbose 1
 
-/gate/application/setTotalNumberOfPrimaries 10000
+/gate/application/setTotalNumberOfPrimaries 100000
 /gate/application/start
